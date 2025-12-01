@@ -17,6 +17,7 @@ jobs:
     permissions:
       packages: write
       id-token: write
+      contents: read
     with:
       image: ros-humble
 
@@ -26,5 +27,6 @@ jobs:
     permissions:
       packages: write
       id-token: write
+      contents: read
     with:
       image: ros-humble-simulation
