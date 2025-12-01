@@ -14,9 +14,9 @@ SHELL ["/bin/bash", "-c"]
 # copy entrypoint
 COPY entrypoint.sh /
 
-# install venv and pipx (latter for uv)
+# install venv, git-lfs and pipx (latter for uv)
 RUN sudo apt-get update && \
-    sudo apt-get install python3.10-venv pipx -y && \
+    sudo apt-get install python3.10-venv git-lfs pipx -y && \
     # install px4_msgs
     source /opt/ros/humble/local_setup.bash && \
     mkdir src && \
