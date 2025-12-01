@@ -1,9 +1,18 @@
 FROM osrf/ros:humble-simulation-jammy
 
-WORKDIR /sapience/ros-ws
+# make new user that can use sudo without password
+RUN useradd -ms /bin/bash sapience -G sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+USER sapience
+
+WORKDIR /home/sapience/ros-ws
 
 # use bash as interpreter so source works
 SHELL ["/bin/bash", "-c"]
+
+# copy entrypoint
+COPY entrypoint.sh /
 
 # install venv and pipx (latter for uv)
 RUN sudo apt-get update && \
@@ -14,4 +23,9 @@ RUN sudo apt-get update && \
     git clone --depth 1 -b release/1.14 https://github.com/PX4/px4_msgs src/px4_msgs && \
     colcon build --packages-select px4_msgs && \
     # install uv
-    pipx install uv
+    pipx install uv && \
+    # make entrypoint executable
+    sudo chmod +x /entrypoint.sh
+
+
+ENTRYPOINT ["/entrypoint.sh"]
