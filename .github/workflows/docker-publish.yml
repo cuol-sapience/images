@@ -19,7 +19,7 @@ jobs:
   build:
     strategy:
       matrix:
-        image: [headless]
+        image: [ros-humble]
 
     runs-on: ubuntu-latest
     permissions:
